@@ -406,44 +406,81 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
   
     /* ── Calendrier disponibilités ── */
-    #disponibilites { background: var(--dark); color: white; }
+    #disponibilites {
+      position: relative; color: white; overflow: hidden;
+      background: #0d1f1c;
+    }
+    #disponibilites .dispo-bg {
+      position: absolute; inset: 0;
+      background: url('photos/lac_drone1.jpg') center/cover no-repeat;
+      opacity: .18; pointer-events: none;
+    }
+    #disponibilites .container { position: relative; z-index: 1; }
     #disponibilites .section-label { color: rgba(255,255,255,.5); }
     #disponibilites .section-title { color: white; }
-    .cal-wrapper { margin-top: 40px; }
+    .dispo-intro {
+      max-width: 560px; font-size: .95rem; line-height: 1.8;
+      color: rgba(255,255,255,.65); margin: 0 0 40px;
+    }
+    .cal-wrapper { }
     .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
     .cal-nav-btn {
-      background: rgba(255,255,255,.08); border: none; color: white; border-radius: 8px;
-      width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; transition: background .2s;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+      color: white; border-radius: 8px; width: 42px; height: 42px;
+      font-size: 1.1rem; cursor: pointer; transition: background .2s;
       display: flex; align-items: center; justify-content: center;
     }
-    .cal-nav-btn:hover { background: rgba(255,255,255,.18); }
-    .cal-months { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .cal-nav-btn:hover { background: rgba(255,255,255,.22); }
+    .cal-months { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
     @media (max-width: 680px) { .cal-months { grid-template-columns: 1fr; } }
+    .cal-month-wrap {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 24px;
+    }
     .cal-month-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.15rem; font-weight: 400; text-transform: capitalize;
-      color: white; margin-bottom: 16px; text-align: center;
+      font-size: 1.2rem; font-weight: 500; text-transform: capitalize;
+      color: white; margin-bottom: 18px; text-align: center; letter-spacing: .03em;
     }
-    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
     .cal-dow {
-      font-size: .65rem; text-transform: uppercase; letter-spacing: .08em;
-      color: rgba(255,255,255,.35); text-align: center; padding: 4px 0 10px;
+      font-size: .62rem; text-transform: uppercase; letter-spacing: .08em;
+      color: rgba(255,255,255,.3); text-align: center; padding: 3px 0 10px;
     }
     .cal-day {
       aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-      font-size: .8rem; border-radius: 6px; color: rgba(255,255,255,.85);
-      position: relative;
+      font-size: .78rem; border-radius: 7px; font-weight: 400;
     }
     .cal-day.empty { background: transparent; }
-    .cal-day.past { color: rgba(255,255,255,.2); }
-    .cal-day.booked { background: rgba(255,255,255,.07); color: rgba(255,255,255,.3); text-decoration: line-through; }
-    .cal-day.free { background: rgba(42,124,111,.35); color: white; font-weight: 500; }
-    .cal-day.today { box-shadow: inset 0 0 0 1.5px var(--gold); }
-    .cal-legend { display: flex; gap: 24px; justify-content: center; margin-top: 28px; }
-    .cal-legend-item { display: flex; align-items: center; gap: 8px; font-size: .78rem; color: rgba(255,255,255,.55); }
-    .cal-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
-    .cal-loading { text-align: center; padding: 60px; color: rgba(255,255,255,.4); font-size: .9rem; }
-    .cal-error { text-align: center; padding: 40px; color: rgba(255,90,95,.7); font-size: .85rem; }
+    .cal-day.past { color: rgba(255,255,255,.18); background: transparent; }
+    .cal-day.booked {
+      background: rgba(190,50,50,.55);
+      color: rgba(255,255,255,.5);
+      font-size: .68rem;
+      position: relative;
+    }
+    .cal-day.booked::after {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        135deg, transparent, transparent 3px,
+        rgba(255,255,255,.08) 3px, rgba(255,255,255,.08) 4px
+      );
+      border-radius: 7px;
+    }
+    .cal-day.free {
+      background: rgba(42,180,130,.85);
+      color: white; font-weight: 600;
+    }
+    .cal-day.today { outline: 2px solid var(--gold); outline-offset: 1px; }
+    .cal-legend {
+      display: flex; gap: 28px; justify-content: center;
+      margin-top: 28px; flex-wrap: wrap;
+    }
+    .cal-legend-item { display: flex; align-items: center; gap: 9px; font-size: .8rem; color: rgba(255,255,255,.6); }
+    .cal-legend-dot { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+    .cal-loading { text-align: center; padding: 60px; color: rgba(255,255,255,.35); font-size: .9rem; }
+    .cal-error { text-align: center; padding: 40px; color: rgba(255,120,120,.8); font-size: .85rem; }
 
   </style>
 </head>
@@ -848,20 +885,29 @@
 <!-- ══ Contact ══ -->
 <!-- ══ Disponibilités ══ -->
 <section id="disponibilites">
+  <div class="dispo-bg"></div>
   <div class="container">
     <p class="section-label">Calendrier</p>
     <h2 class="section-title">Disponibilités <strong>en temps réel</strong></h2>
+    <p class="dispo-intro">Consultez les dates disponibles directement depuis notre planning Airbnb, mis à jour automatiquement. Les jours en vert sont libres — n'hésitez pas à nous contacter pour réserver.</p>
 
     <div class="cal-wrapper">
       <div class="cal-nav">
         <button class="cal-nav-btn" id="calPrev">←</button>
-        <span id="calRange" style="font-size:.85rem;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;"></span>
+        <span id="calRange" style="font-size:.82rem;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;"></span>
         <button class="cal-nav-btn" id="calNext">→</button>
       </div>
       <div id="calBody"><div class="cal-loading">Chargement des disponibilités…</div></div>
       <div class="cal-legend">
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(42,124,111,.6)"></div> Disponible</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(255,255,255,.12)"></div> Occupé</div>
+        <div class="cal-legend-item">
+          <div class="cal-legend-dot" style="background:rgba(42,180,130,.85)"></div> Disponible
+        </div>
+        <div class="cal-legend-item">
+          <div class="cal-legend-dot" style="background:rgba(190,50,50,.55)"></div> Occupé
+        </div>
+        <div class="cal-legend-item">
+          <div class="cal-legend-dot" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2)"></div> Passé
+        </div>
       </div>
     </div>
   </div>
@@ -1073,7 +1119,7 @@
 
 <script>
 (function() {
-  const ICAL_URL = 'https://www.airbnb.fr/calendar/ical/791077489652766374.ics?t=717f29a3720c49c7b8c8879edaf95d2f';
+  const ICAL_URL = 'https://www.villaoverdon.com/?feed=hbook-calendar.ics&accom_id=6014&accom_num=1';
   const PROXY   = 'https://api.allorigins.win/raw?url=';
   const DAYS    = ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'];
   const MONTHS  = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -1128,7 +1174,7 @@
     // lundi=0 … dimanche=6
     let startDow = (first.getDay() + 6) % 7;
 
-    let html = '<div>';
+    let html = '<div class="cal-month-wrap">';
     html += '<div class="cal-month-title">' + MONTHS[month] + ' ' + year + '</div>';
     html += '<div class="cal-grid">';
     DAYS.forEach(d => { html += '<div class="cal-dow">' + d + '</div>'; });
