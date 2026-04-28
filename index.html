@@ -77,10 +77,21 @@
       border: 1px solid rgba(201,168,76,.5); padding: 6px 18px; border-radius: 50px; margin-bottom: 22px;
     }
     .hero-title {
-      font-family: var(--font-serif); font-size: clamp(2.6rem, 7vw, 5rem);
+      font-family: var(--font-serif);
       font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: 14px;
     }
-    .hero-title strong { font-weight: 600; }
+    .hero-title .title-main {
+      display: block;
+      font-size: clamp(3.6rem, 10vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+    }
+    .hero-title .title-sub {
+      display: block;
+      font-size: clamp(1.6rem, 4.5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: .04em;
+    }
     .hero-subtitle {
       font-size: clamp(.88rem, 2vw, 1.05rem); color: rgba(255,255,255,.82);
       margin-bottom: 36px; font-weight: 300;
@@ -507,7 +518,10 @@
   <div class="hero-bg"></div>
   <div class="hero-content">
     <div class="hero-badge">✦ Saint-Jorioz · Lac d'Annecy · Haute-Savoie</div>
-    <h1 class="hero-title">Herbier <strong>· Entre Lac & Cimes</strong></h1>
+    <h1 class="hero-title">
+      <span class="title-main">Herbier</span>
+      <span class="title-sub">· Entre Lac &amp; Cimes</span>
+    </h1>
     <p class="hero-subtitle">Studio Lac d'Annecy</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">Demander une disponibilité</a>
