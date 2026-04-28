@@ -1129,15 +1129,19 @@
 
   function parseICal(text) {
     const ranges = [];
-    const blocks = text.split('BEGIN:VEVENT');
+    // Normalise les fins de ligne (CRLF → LF, retrait des line folding)
+    const normalized = text.replace(/\r\n /g, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const blocks = normalized.split('BEGIN:VEVENT');
     for (let i = 1; i < blocks.length; i++) {
       const b = blocks[i];
-      const s = b.match(/DTSTART(?:;[^:]+)?:([0-9]{8})/);
-      const e = b.match(/DTEND(?:;[^:]+)?:([0-9]{8})/);
+      // Accepte DATE (20260601) et DATETIME (20260601T... ou 20260601T...Z)
+      const s = b.match(/DTSTART(?:;[^:\n]+)?:([0-9]{8})/);
+      const e = b.match(/DTEND(?:;[^:\n]+)?:([0-9]{8})/);
       if (s && e) {
         ranges.push({ start: toDate(s[1]), end: toDate(e[1]) });
       }
     }
+    console.log('[Herbier Cal] parsed', ranges.length, 'reservations', ranges);
     return ranges;
   }
 
@@ -1194,23 +1198,47 @@
     return html;
   }
 
+  const PROXIES = [
+    'https://api.allorigins.win/raw?url=',
+    'https://corsproxy.io/?',
+    'https://api.codetabs.com/v1/proxy?quest='
+  ];
+
+  async function fetchIcal() {
+    for (const proxy of PROXIES) {
+      try {
+        console.log('[Herbier Cal] trying proxy:', proxy);
+        const res = await fetch(proxy + encodeURIComponent(ICAL_URL));
+        if (!res.ok) { console.warn('[Herbier Cal] HTTP', res.status); continue; }
+        const text = await res.text();
+        if (!text.includes('BEGIN:VCALENDAR')) { console.warn('[Herbier Cal] invalid iCal from proxy'); continue; }
+        console.log('[Herbier Cal] success with proxy:', proxy, '— chars:', text.length);
+        return text;
+      } catch(err) {
+        console.warn('[Herbier Cal] proxy failed:', proxy, err.message);
+      }
+    }
+    return null;
+  }
+
   async function init() {
-    try {
-      const res  = await fetch(PROXY + encodeURIComponent(ICAL_URL));
-      const text = await res.text();
+    // Afficher un spinner pendant le chargement
+    document.getElementById('calBody').innerHTML =
+      '<div class="cal-loading">Chargement des disponibilités…</div>';
+
+    const text = await fetchIcal();
+    if (text) {
       bookedRanges = parseICal(text);
       renderCalendar();
-    } catch(e) {
+    } else {
       document.getElementById('calBody').innerHTML =
-        '<div class="cal-error">Impossible de charger le calendrier. Contactez-nous directement.</div>';
+        '<div class="cal-error">Impossible de charger le calendrier. <a href="https://www.airbnb.fr/rooms/1438319463357113219" target="_blank" style="color:var(--gold)">Voir les disponibilités sur Airbnb →</a></div>';
     }
   }
 
   document.getElementById('calPrev').addEventListener('click', () => { viewOffset--; renderCalendar(); });
   document.getElementById('calNext').addEventListener('click', () => { viewOffset++; renderCalendar(); });
 
-  // Rendre sans attendre (vide) puis mettre à jour
-  renderCalendar();
   init();
 })();
 </script>
