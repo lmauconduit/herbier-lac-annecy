@@ -404,6 +404,47 @@
     /* Fade-in animation */
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+  
+    /* ── Calendrier disponibilités ── */
+    #disponibilites { background: var(--dark); color: white; }
+    #disponibilites .section-label { color: rgba(255,255,255,.5); }
+    #disponibilites .section-title { color: white; }
+    .cal-wrapper { margin-top: 40px; }
+    .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .cal-nav-btn {
+      background: rgba(255,255,255,.08); border: none; color: white; border-radius: 8px;
+      width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; transition: background .2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-nav-btn:hover { background: rgba(255,255,255,.18); }
+    .cal-months { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    @media (max-width: 680px) { .cal-months { grid-template-columns: 1fr; } }
+    .cal-month-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem; font-weight: 400; text-transform: capitalize;
+      color: white; margin-bottom: 16px; text-align: center;
+    }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .cal-dow {
+      font-size: .65rem; text-transform: uppercase; letter-spacing: .08em;
+      color: rgba(255,255,255,.35); text-align: center; padding: 4px 0 10px;
+    }
+    .cal-day {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; border-radius: 6px; color: rgba(255,255,255,.85);
+      position: relative;
+    }
+    .cal-day.empty { background: transparent; }
+    .cal-day.past { color: rgba(255,255,255,.2); }
+    .cal-day.booked { background: rgba(255,255,255,.07); color: rgba(255,255,255,.3); text-decoration: line-through; }
+    .cal-day.free { background: rgba(42,124,111,.35); color: white; font-weight: 500; }
+    .cal-day.today { box-shadow: inset 0 0 0 1.5px var(--gold); }
+    .cal-legend { display: flex; gap: 24px; justify-content: center; margin-top: 28px; }
+    .cal-legend-item { display: flex; align-items: center; gap: 8px; font-size: .78rem; color: rgba(255,255,255,.55); }
+    .cal-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+    .cal-loading { text-align: center; padding: 60px; color: rgba(255,255,255,.4); font-size: .9rem; }
+    .cal-error { text-align: center; padding: 40px; color: rgba(255,90,95,.7); font-size: .85rem; }
+
   </style>
 </head>
 <body>
@@ -417,7 +458,7 @@
     <li><a href="#amenities">Équipements</a></li>
     <li><a href="#location">Localisation</a></li>
     <li><a href="tourisme.html" style="color:var(--teal)!important;font-weight:600!important;">🗺️ Tourisme</a></li>
-    <li><a href="#contact" class="nav-cta">Réserver</a></li>
+    <li><a href="#disponibilites">Disponibilités</a></li><li><a href="#contact" class="nav-cta">Réserver</a></li>
   </ul>
   <div class="burger" id="burger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -805,6 +846,27 @@
 </section>
 
 <!-- ══ Contact ══ -->
+<!-- ══ Disponibilités ══ -->
+<section id="disponibilites">
+  <div class="container">
+    <p class="section-label">Calendrier</p>
+    <h2 class="section-title">Disponibilités <strong>en temps réel</strong></h2>
+
+    <div class="cal-wrapper">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" id="calPrev">←</button>
+        <span id="calRange" style="font-size:.85rem;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;"></span>
+        <button class="cal-nav-btn" id="calNext">→</button>
+      </div>
+      <div id="calBody"><div class="cal-loading">Chargement des disponibilités…</div></div>
+      <div class="cal-legend">
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(42,124,111,.6)"></div> Disponible</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(255,255,255,.12)"></div> Occupé</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="contact">
   <div class="container">
     <div class="contact-grid">
@@ -1008,5 +1070,104 @@
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
 <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+<script>
+(function() {
+  const ICAL_URL = 'https://www.airbnb.fr/calendar/ical/791077489652766374.ics?t=717f29a3720c49c7b8c8879edaf95d2f';
+  const PROXY   = 'https://api.allorigins.win/raw?url=';
+  const DAYS    = ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'];
+  const MONTHS  = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+  let bookedRanges = [];
+  let viewOffset   = 0; // 0 = mois courant + suivant
+
+  function parseICal(text) {
+    const ranges = [];
+    const blocks = text.split('BEGIN:VEVENT');
+    for (let i = 1; i < blocks.length; i++) {
+      const b = blocks[i];
+      const s = b.match(/DTSTART(?:;[^:]+)?:([0-9]{8})/);
+      const e = b.match(/DTEND(?:;[^:]+)?:([0-9]{8})/);
+      if (s && e) {
+        ranges.push({ start: toDate(s[1]), end: toDate(e[1]) });
+      }
+    }
+    return ranges;
+  }
+
+  function toDate(str) {
+    return new Date(+str.slice(0,4), +str.slice(4,6)-1, +str.slice(6,8));
+  }
+
+  function isBooked(d) {
+    return bookedRanges.some(r => d >= r.start && d < r.end);
+  }
+
+  function renderCalendar() {
+    const today   = new Date(); today.setHours(0,0,0,0);
+    const base    = new Date(today.getFullYear(), today.getMonth() + viewOffset, 1);
+    const months  = [
+      new Date(base.getFullYear(), base.getMonth(), 1),
+      new Date(base.getFullYear(), base.getMonth() + 1, 1)
+    ];
+
+    document.getElementById('calRange').textContent =
+      MONTHS[months[0].getMonth()] + ' ' + months[0].getFullYear() +
+      ' – ' +
+      MONTHS[months[1].getMonth()] + ' ' + months[1].getFullYear();
+
+    document.getElementById('calBody').innerHTML =
+      '<div class="cal-months">' +
+      months.map(m => renderMonth(m, today)).join('') +
+      '</div>';
+  }
+
+  function renderMonth(first, today) {
+    const year = first.getFullYear(), month = first.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    // lundi=0 … dimanche=6
+    let startDow = (first.getDay() + 6) % 7;
+
+    let html = '<div>';
+    html += '<div class="cal-month-title">' + MONTHS[month] + ' ' + year + '</div>';
+    html += '<div class="cal-grid">';
+    DAYS.forEach(d => { html += '<div class="cal-dow">' + d + '</div>'; });
+
+    for (let i = 0; i < startDow; i++) html += '<div class="cal-day empty"></div>';
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(year, month, d);
+      let cls = 'cal-day';
+      if (date < today)        cls += ' past';
+      else if (isBooked(date)) cls += ' booked';
+      else                     cls += ' free';
+      if (+date === +today)    cls += ' today';
+      html += '<div class="' + cls + '">' + d + '</div>';
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  async function init() {
+    try {
+      const res  = await fetch(PROXY + encodeURIComponent(ICAL_URL));
+      const text = await res.text();
+      bookedRanges = parseICal(text);
+      renderCalendar();
+    } catch(e) {
+      document.getElementById('calBody').innerHTML =
+        '<div class="cal-error">Impossible de charger le calendrier. Contactez-nous directement.</div>';
+    }
+  }
+
+  document.getElementById('calPrev').addEventListener('click', () => { viewOffset--; renderCalendar(); });
+  document.getElementById('calNext').addEventListener('click', () => { viewOffset++; renderCalendar(); });
+
+  // Rendre sans attendre (vide) puis mettre à jour
+  renderCalendar();
+  init();
+})();
+</script>
+
 </body>
 </html>
