@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide Tourisme · Lac d'Annecy & Saint-Jorioz</title>
+  <meta name="description" content="Guide complet de la région du lac d'Annecy : Saint-Jorioz, Annecy, voie verte vélo, 10 lieux exceptionnels à découvrir." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal:   #3a7d8c;
+      --teal-l: #5ba8b8;
+      --teal-d: #2a5f6e;
+      --sand:   #f4efe8;
+      --dark:   #1a2630;
+      --mid:    #4a5568;
+      --light:  #f8f6f3;
+      --white:  #ffffff;
+      --gold:   #c9a84c;
+      --green:  #4a7c59;
+      --green-l:#e8f4ec;
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(26,38,48,.10);
+      --shadow-lg: 0 12px 48px rgba(26,38,48,.16);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--light); color: var(--dark); line-height: 1.65; overflow-x: hidden; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 40px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(58,125,140,.12); transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: var(--shadow); }
+    .nav-brand { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: var(--teal-d); text-decoration: none; }
+    .nav-brand span { color: var(--gold); }
+    .nav-links { display: flex; gap: 6px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: .78rem; font-weight: 500; color: var(--mid);
+      text-decoration: none; padding: 7px 14px; border-radius: 50px;
+      transition: all .2s; white-space: nowrap;
+    }
+    .nav-links a:hover { background: var(--sand); color: var(--teal); }
+    .nav-back { background: var(--sand); color: var(--teal-d) !important; }
+    .nav-back:hover { background: var(--warm, #e8dfd0) !important; }
+    .burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .burger span { display: block; width: 22px; height: 2px; background: var(--dark); border-radius: 2px; }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative; height: 80vh; min-height: 520px;
+      display: flex; align-items: flex-end; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,38,48,.75) 0%, rgba(26,38,48,.2) 60%),
+        url('photos/lac_drone1.jpg') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative; z-index: 2; padding: 60px 60px;
+      max-width: 900px;
+    }
+    .hero-badge {
+      display: inline-block; font-size: .7rem; font-weight: 500;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(201,168,76,.5); padding: 5px 16px; border-radius: 50px; margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: 14px;
+    }
+    .hero-title strong { font-weight: 600; display: block; }
+    .hero-sub { font-size: 1rem; color: rgba(255,255,255,.78); max-width: 580px; line-height: 1.7; }
+
+    /* ── Table des matières ── */
+    .toc {
+      background: var(--white); box-shadow: var(--shadow);
+      padding: 28px 40px; display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap; overflow-x: auto;
+    }
+    .toc-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); font-weight: 500; margin-right: 8px; flex-shrink: 0; }
+    .toc-link {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .82rem; font-weight: 500; color: var(--teal-d);
+      text-decoration: none; padding: 7px 16px; border-radius: 50px;
+      background: var(--sand); transition: all .2s; white-space: nowrap;
+    }
+    .toc-link:hover { background: var(--teal); color: white; }
+
+    /* ── Sections ── */
+    section { padding: 92px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .container-wide { max-width: 1360px; margin: 0 auto; padding: 0 24px; }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .68rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 10px;
+    }
+    .section-tag::before { content: ''; display: block; width: 24px; height: 1.5px; background: var(--teal); }
+    .section-title {
+      font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300; line-height: 1.15; color: var(--dark); margin-bottom: 20px;
+    }
+    .section-title strong { font-weight: 600; }
+    .lead { font-size: 1.05rem; color: var(--mid); line-height: 1.8; max-width: 640px; }
+
+    .divider {
+      height: 1px; background: linear-gradient(to right, transparent, rgba(58,125,140,.2), transparent);
+      margin: 0; border: none;
+    }
+
+    /* ── Saint-Jorioz ── */
+    #saint-jorioz { background: var(--white); }
+    .sj-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 70px; align-items: center; }
+    .sj-img {
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      aspect-ratio: 4/3; box-shadow: var(--shadow-lg);
+    }
+    .sj-img img { width: 100%; height: 100%; object-fit: cover; }
+    .sj-img-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 20px; background: linear-gradient(to top, rgba(26,38,48,.7), transparent);
+      color: white; font-size: .82rem; font-family: var(--font-serif); font-style: italic;
+    }
+
+    .info-pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+    .pill {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--sand); border-radius: 50px; padding: 7px 14px;
+      font-size: .82rem; font-weight: 500;
+    }
+    .pill-icon { font-size: 1rem; }
+
+    .activity-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+    .activity-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 18px; background: var(--light); border-radius: 12px;
+      border-left: 3px solid var(--teal);
+    }
+    .activity-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 1px; }
+    .activity-title { font-weight: 600; font-size: .92rem; margin-bottom: 3px; }
+    .activity-desc { font-size: .83rem; color: var(--mid); line-height: 1.55; }
+
+    /* ── Annecy ── */
+    #annecy { background: var(--light); }
+    .annecy-intro { display: grid; grid-template-columns: 1fr 1.1fr; gap: 70px; align-items: center; margin-bottom: 64px; }
+    .annecy-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 3/2; box-shadow: var(--shadow-lg); }
+    .annecy-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .monuments-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .monument-card {
+      background: var(--white); border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); transition: transform .25s, box-shadow .25s;
+    }
+    .monument-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .monument-img { aspect-ratio: 3/2; overflow: hidden; }
+    .monument-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .monument-card:hover .monument-img img { transform: scale(1.06); }
+    .monument-body { padding: 20px; }
+    .monument-icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+    .monument-title { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+    .monument-text { font-size: .83rem; color: var(--mid); line-height: 1.6; }
+
+    /* ── Lac ── */
+    #lac { background: var(--teal-d); color: white; }
+    #lac .section-tag { color: var(--teal-l); }
+    #lac .section-tag::before { background: var(--teal-l); }
+    #lac .section-title { color: white; }
+    #lac .section-title strong { color: var(--gold); }
+    #lac .lead { color: rgba(255,255,255,.78); max-width: 700px; }
+
+    .lac-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin: 48px 0; }
+    .lac-stat {
+      background: rgba(255,255,255,.08); padding: 28px 20px; text-align: center;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .lac-stat:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .lac-stat:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .lac-stat-value { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 600; color: var(--gold); margin-bottom: 6px; }
+    .lac-stat-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.55); }
+
+    .activites-eau { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .activite-card {
+      background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px; padding: 20px 16px; text-align: center;
+      transition: background .25s, transform .25s;
+    }
+    .activite-card:hover { background: rgba(255,255,255,.16); transform: translateY(-3px); }
+    .activite-icon { font-size: 1.9rem; margin-bottom: 10px; display: block; }
+    .activite-name { font-size: .84rem; font-weight: 500; color: rgba(255,255,255,.9); }
+
+    /* ── Voie Verte ── */
+    #voie-verte { background: var(--white); }
+    .vv-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+
+    .vv-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; box-shadow: var(--shadow-lg); }
+    .vv-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .vv-info-box {
+      background: var(--green-l); border: 1px solid rgba(74,124,89,.2);
+      border-radius: var(--radius); padding: 24px; margin: 24px 0;
+    }
+    .vv-info-title { font-weight: 600; font-size: .9rem; color: var(--green); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .vv-steps { display: flex; flex-direction: column; gap: 12px; }
+    .vv-step {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .vv-step-num {
+      width: 28px; height: 28px; background: var(--green); color: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 600; flex-shrink: 0;
+    }
+    .vv-step-text { font-size: .84rem; color: var(--mid); line-height: 1.55; padding-top: 4px; }
+    .vv-step-text strong { color: var(--dark); }
+
+    .vv-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+    .vv-card {
+      background: var(--sand); border-radius: 10px; padding: 16px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .vv-card-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .vv-card-title { font-weight: 600; font-size: .85rem; margin-bottom: 2px; }
+    .vv-card-sub { font-size: .78rem; color: var(--mid); }
+
+    /* ── 10 Lieux ── */
+    #lieux { background: var(--light); }
+    .lieux-header { text-align: center; margin-bottom: 56px; }
+    .lieux-header .lead { margin: 0 auto; text-align: left; max-width: 640px; text-align: center; }
+
+    .lieux-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .lieu-card {
+      background: var(--white); border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .lieu-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .lieu-card-img { aspect-ratio: 16/7; overflow: hidden; position: relative; }
+    .lieu-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .lieu-card:hover .lieu-card-img img { transform: scale(1.06); }
+    .lieu-number {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--gold); color: white;
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: .88rem; font-family: var(--font-serif);
+    }
+    .lieu-distance {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(26,38,48,.7); color: white;
+      font-size: .72rem; font-weight: 500; padding: 4px 10px; border-radius: 50px;
+      backdrop-filter: blur(4px);
+    }
+    .lieu-body { padding: 22px 24px; flex: 1; }
+    .lieu-emoji { font-size: 1.4rem; margin-bottom: 8px; display: block; }
+    .lieu-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+    .lieu-text { font-size: .85rem; color: var(--mid); line-height: 1.65; }
+    .lieu-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .lieu-tag {
+      font-size: .72rem; font-weight: 500; padding: 3px 10px;
+      border-radius: 50px; background: var(--sand); color: var(--teal-d);
+    }
+
+    /* Featured lieu (spans 2 cols) */
+    .lieu-card.featured { grid-column: span 2; flex-direction: row; }
+    .lieu-card.featured .lieu-card-img { aspect-ratio: unset; width: 44%; flex-shrink: 0; }
+    .lieu-card.featured .lieu-body { padding: 32px; }
+    .lieu-card.featured .lieu-title { font-size: 1.6rem; }
+    .lieu-card.featured .lieu-text { font-size: .9rem; max-width: 540px; }
+
+    /* ── CTA Final ── */
+    #cta {
+      background: linear-gradient(135deg, var(--teal-d) 0%, var(--teal) 100%);
+      padding: 80px 24px; text-align: center; color: white;
+    }
+    .cta-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; margin-bottom: 14px; }
+    .cta-title strong { font-weight: 600; }
+    .cta-sub { font-size: 1rem; color: rgba(255,255,255,.75); margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 14px 30px; border-radius: 50px; font-size: .9rem; font-weight: 500; text-decoration: none; letter-spacing: .04em; transition: all .25s; cursor: pointer; border: none; }
+    .btn-white { background: white; color: var(--teal-d); }
+    .btn-white:hover { background: var(--sand); transform: translateY(-2px); }
+    .btn-outline-white { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,.65); }
+    .btn-outline-white:hover { background: rgba(255,255,255,.12); }
+
+    /* ── Footer ── */
+    footer { background: var(--dark); color: rgba(255,255,255,.55); padding: 40px 24px; text-align: center; }
+    .footer-brand { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; color: white; margin-bottom: 8px; }
+    .footer-brand span { color: var(--gold); }
+    .footer-links { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; list-style: none; margin: 16px 0; }
+    .footer-links a { color: rgba(255,255,255,.4); text-decoration: none; font-size: .8rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--teal-l); }
+    .footer-copy { font-size: .72rem; opacity: .38; }
+
+    /* ── Reveals ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: white; padding: 20px; gap: 6px; box-shadow: var(--shadow); z-index: 99; }
+      .nav-links.open { display: flex; }
+      .burger { display: flex; }
+      .hero-content { padding: 40px 28px; }
+      .sj-grid, .annecy-intro, .vv-layout { grid-template-columns: 1fr; gap: 36px; }
+      .monuments-grid { grid-template-columns: 1fr 1fr; }
+      .lac-stats { grid-template-columns: repeat(2, 1fr); }
+      .lac-stat:nth-child(2) { border-radius: 0; }
+      .lac-stat:nth-child(3) { border-radius: 0; }
+      .lieux-grid { grid-template-columns: 1fr; }
+      .lieu-card.featured { flex-direction: column; grid-column: span 1; }
+      .lieu-card.featured .lieu-card-img { width: 100%; aspect-ratio: 16/7; }
+      .toc { padding: 18px 20px; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 60px 16px; }
+      .monuments-grid { grid-template-columns: 1fr; }
+      .lac-stats { grid-template-columns: 1fr 1fr; }
+      .vv-cards { grid-template-columns: 1fr; }
+      .toc { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ Navigation ══ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-brand">Herbier <span>·</span> Entre Lac &amp; Cimes</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#saint-jorioz">Saint-Jorioz</a></li>
+    <li><a href="#annecy">Annecy</a></li>
+    <li><a href="#lac">Le Lac</a></li>
+    <li><a href="#voie-verte">Voie Verte</a></li>
+    <li><a href="#lieux">10 lieux</a></li>
+    <li><a href="#activites">Activités</a></li>
+    <li><a href="#evenements">Événements</a></li>
+    <li><a href="#activites">Activités</a></li>
+    <li><a href="#evenements">Événements</a></li>
+    <li><a href="index.html" class="nav-back">← Le studio</a></li>
+  </ul>
+  <div class="burger" id="burger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ══ Hero ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Guide touristique · Lac d'Annecy · Haute-Savoie</div>
+    <h1 class="hero-title">
+      Découvrez
+      <strong>le lac d'Annecy</strong>
+    </h1>
+    <p class="hero-sub">Saint-Jorioz, la vieille ville d'Annecy, la voie verte à vélo et les 10 lieux exceptionnels à explorer depuis votre studio.</p>
+  </div>
+</section>
+
+<!-- ══ Table des matières ══ -->
+<div class="toc">
+  <span class="toc-label">Explorer →</span>
+  <a href="#saint-jorioz" class="toc-link">🏘️ Saint-Jorioz</a>
+  <a href="#annecy" class="toc-link">🏰 Annecy</a>
+  <a href="#lac" class="toc-link">💧 Le Lac</a>
+  <a href="#voie-verte" class="toc-link">🚲 Voie Verte</a>
+  <a href="#lieux" class="toc-link">⭐ 10 lieux exceptionnels</a>
+  <a href="#activites" class="toc-link">🧗 Activités outdoor</a>
+  <a href="#evenements" class="toc-link">🎬 Événements</a>
+</div>
+
+<!-- ══ Saint-Jorioz ══ -->
+<section id="saint-jorioz">
+  <div class="container">
+    <div class="sj-grid">
+      <div class="reveal">
+        <p class="section-tag">Votre village</p>
+        <h2 class="section-title">Saint-Jorioz,<br /><strong>un havre de paix</strong></h2>
+        <p class="lead">Nichée sur la rive ouest du lac d'Annecy, à 10 km au sud d'Annecy, Saint-Jorioz est une commune idyllique qui conjugue douceur de vivre, nature préservée et accès direct au lac.</p>
+
+        <div class="info-pills">
+          <div class="pill"><span class="pill-icon">👥</span> ~4 500 habitants</div>
+          <div class="pill"><span class="pill-icon">⛰️</span> 456 m d'altitude</div>
+          <div class="pill"><span class="pill-icon">🚗</span> 10 km d'Annecy</div>
+          <div class="pill"><span class="pill-icon">💧</span> Lac à 25 min à pied</div>
+        </div>
+
+        <div class="activity-list">
+          <div class="activity-item reveal">
+            <span class="activity-icon">🏖️</span>
+            <div>
+              <div class="activity-title">Plage municipale de Saint-Jorioz</div>
+              <div class="activity-desc">L'une des rares plages de sable fin du bassin annécien. Grande plage herbeuse et sableuse, idéale pour les familles, face aux Dents de Lanfon. Baignade surveillée en saison, accès gratuit.</div>
+            </div>
+          </div>
+          <div class="activity-item reveal">
+            <span class="activity-icon">🌿</span>
+            <div>
+              <div class="activity-title">Sentier des Roselières</div>
+              <div class="activity-desc">Balade facile de 1h30 le long des berges, accessible aux familles. Découverte de la faune et flore locales dans les zones humides protégées du lac.</div>
+            </div>
+          </div>
+          <div class="activity-item reveal">
+            <span class="activity-icon">⛵</span>
+            <div>
+              <div class="activity-title">Activités nautiques</div>
+              <div class="activity-desc">Le Club Internautique propose catamaran, planche à voile et paddle. Cours et locations disponibles pour tous niveaux, été comme hiver.</div>
+            </div>
+          </div>
+          <div class="activity-item reveal">
+            <span class="activity-icon">🚲</span>
+            <div>
+              <div class="activity-title">Accès direct à la Voie Verte</div>
+              <div class="activity-desc">Depuis Saint-Jorioz, rejoignez en quelques minutes la piste cyclable qui longe toute la rive ouest du lac. Location de vélos à 500 m du studio.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sj-img reveal">
+        <img src="photos/sj_ponton.jpg" alt="Saint-Jorioz au bord du lac d'Annecy" loading="lazy" />
+        <div class="sj-img-caption">Vue sur la Tournette depuis les rives de Saint-Jorioz</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ══ Annecy ══ -->
+<section id="annecy">
+  <div class="container">
+    <div class="annecy-intro reveal">
+      <div>
+        <p class="section-tag">La ville</p>
+        <h2 class="section-title">Annecy,<br /><strong>la Venise des Alpes</strong></h2>
+        <p class="lead">Annecy séduit par ses canaux turquoise, ses ruelles médiévales colorées et son château perché sur la colline. Capitale de la Haute-Savoie, elle est à moins de 10 km par la route ou accessible en bus depuis Saint-Jorioz.</p>
+        <div class="info-pills" style="margin-top: 22px;">
+          <div class="pill"><span class="pill-icon">🏙️</span> ~130 000 hab.</div>
+          <div class="pill"><span class="pill-icon">🚌</span> Bus depuis Saint-Jorioz</div>
+          <div class="pill"><span class="pill-icon">🚆</span> Gare TGV (Paris 3h30)</div>
+          <div class="pill"><span class="pill-icon">✈️</span> Aéroport Genève 35 min</div>
+        </div>
+      </div>
+      <div class="annecy-img">
+        <img src="photos/annecy_vieille.jpg" alt="Annecy vieille ville et ses canaux" loading="lazy" />
+      </div>
+    </div>
+
+    <div class="monuments-grid">
+      <div class="monument-card reveal">
+        <div class="monument-img">
+          <img src="photos/palais_ile.jpg" alt="Palais de l'Île, Annecy" loading="lazy" />
+        </div>
+        <div class="monument-body">
+          <span class="monument-icon">🏰</span>
+          <div class="monument-title">Palais de l'Île</div>
+          <p class="monument-text">Monument emblématique d'Annecy, bâti sur un îlot rocheux au milieu du Thiou, pareil à un navire de pierre. Ancienne prison, monnaie, tribunal… Aujourd'hui musée. La photo la plus célèbre de la ville.</p>
+        </div>
+      </div>
+      <div class="monument-card reveal">
+        <div class="monument-img">
+          <img src="photos/chateau_annecy.jpg" alt="Château d'Annecy" loading="lazy" />
+        </div>
+        <div class="monument-body">
+          <span class="monument-icon">🗼</span>
+          <div class="monument-title">Château d'Annecy</div>
+          <p class="monument-text">Dominant la vieille ville, ce château médiéval a abrité les Comtes de Genève, puis les Ducs de Savoie. Aujourd'hui musée régional avec vue panoramique sur le lac et les montagnes.</p>
+        </div>
+      </div>
+      <div class="monument-card reveal">
+        <div class="monument-img">
+          <img src="photos/pont_amour.jpg" alt="Pont des Amours, Annecy" loading="lazy" />
+        </div>
+        <div class="monument-body">
+          <span class="monument-icon">🌸</span>
+          <div class="monument-title">Pont des Amours & Jardins</div>
+          <p class="monument-text">Le romantique Pont des Amours relie les Jardins de l'Europe au Pâquier. Bords du lac fleuris, vue sur les montagnes, embarcadères pour croisières lacustres. Idéal au coucher du soleil.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 36px; background: var(--sand); border-radius: var(--radius); padding: 28px 32px;" class="reveal">
+      <div style="font-weight: 600; font-size: .9rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+        <span>📅</span> À ne pas manquer à Annecy
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; font-size: .85rem; color: var(--mid);">
+        <div style="display: flex; gap: 8px;"><span>🐟</span> <span><strong>Marché du mardi et vendredi</strong> — Vieille ville, fromages, charcuteries savoyardes</span></div>
+        <div style="display: flex; gap: 8px;"><span>🎆</span> <span><strong>Fête du lac</strong> (août) — Le plus grand feu d'artifice sur l'eau d'Europe</span></div>
+        <div style="display: flex; gap: 8px;"><span>🚢</span> <span><strong>Croisières lacustres</strong> — Tour du lac en bateau depuis les quais d'Annecy</span></div>
+        <div style="display: flex; gap: 8px;"><span>🎿</span> <span><strong>Hiver</strong> — Stations de ski à 40 min (La Clusaz, Grand-Bornand)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ══ Lac ══ -->
+<section id="lac">
+  <div class="container">
+    <div class="reveal" style="text-align: center; margin-bottom: 0;">
+      <p class="section-tag" style="justify-content: center;">Le joyau des Alpes</p>
+      <h2 class="section-title" style="text-align: center;">Le Lac d'Annecy,<br /><strong>l'eau la plus pure d'Europe</strong></h2>
+      <p class="lead" style="text-align: center; margin: 0 auto;">2ème plus grand lac naturel de France, ses eaux d'une transparence exceptionnelle atteignent 15 mètres de profondeur visible. Une qualité préservée depuis les années 1960 grâce à une protection environnementale exemplaire.</p>
+    </div>
+
+    <div class="lac-stats reveal">
+      <div class="lac-stat">
+        <div class="lac-stat-value">27,6 km²</div>
+        <div class="lac-stat-label">Superficie</div>
+      </div>
+      <div class="lac-stat">
+        <div class="lac-stat-value">82 m</div>
+        <div class="lac-stat-label">Profondeur max.</div>
+      </div>
+      <div class="lac-stat">
+        <div class="lac-stat-value">14,6 km</div>
+        <div class="lac-stat-label">Longueur</div>
+      </div>
+      <div class="lac-stat">
+        <div class="lac-stat-value">15 m</div>
+        <div class="lac-stat-label">Transparence de l'eau</div>
+      </div>
+    </div>
+
+    <div class="activites-eau reveal">
+      <div class="activite-card">
+        <span class="activite-icon">🏊</span>
+        <div class="activite-name">Baignade</div>
+      </div>
+      <div class="activite-card">
+        <span class="activite-icon">🚣</span>
+        <div class="activite-name">Aviron</div>
+      </div>
+      <div class="activite-card">
+        <span class="activite-icon">🏄</span>
+        <div class="activite-name">Paddle</div>
+      </div>
+      <div class="activite-card">
+        <span class="activite-icon">⛵</span>
+        <div class="activite-name">Voile</div>
+      </div>
+      <div class="activite-card">
+        <span class="activite-icon">🤿</span>
+        <div class="activite-name">Plongée</div>
+      </div>
+      <div class="activite-card">
+        <span class="activite-icon">🚢</span>
+        <div class="activite-name">Croisières</div>
+      </div>
+      <div class="activite-card">
+        <span class="activite-icon">🎿</span>
+        <div class="activite-name">Ski nautique</div>
+      </div>
+      <div class="activite-card">
+        <span class="activite-icon">🐟</span>
+        <div class="activite-name">Pêche</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius); padding: 28px 32px;" class="reveal">
+      <p style="color: rgba(255,255,255,.6); font-size: .88rem; line-height: 1.75;">
+        🌿 <strong style="color: var(--gold);">Préservation exemplaire :</strong> Dans les années 1960, le lac était gravement pollué. Un programme de collecte des eaux usées sur tout le bassin versant a permis une régénération spectaculaire. Aujourd'hui, sa transparence et sa pureté en font l'un des lacs les plus propres d'Europe, avec 10 bases nautiques et plus de 30 activités proposées toute l'année.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ══ Voie Verte ══ -->
+<section id="voie-verte">
+  <div class="container">
+    <div class="vv-layout">
+      <div class="reveal">
+        <p class="section-tag">À vélo</p>
+        <h2 class="section-title">La Voie Verte,<br /><strong>40 km autour du lac</strong></h2>
+        <p class="lead">La voie verte du lac d'Annecy est l'une des plus belles pistes cyclables de France. Depuis Saint-Jorioz, vous rejoignez en quelques minutes cette piste sécurisée sur l'ancienne voie ferrée, longeant les eaux turquoise du lac sur toute la rive ouest.</p>
+
+        <div class="vv-info-box reveal">
+          <div class="vv-info-title">🗺️ Itinéraire du tour du lac (40 km · 250 m D+)</div>
+          <div class="vv-steps">
+            <div class="vv-step">
+              <div class="vv-step-num">1</div>
+              <div class="vv-step-text"><strong>Annecy</strong> → Départ depuis les quais, le long du Thiou</div>
+            </div>
+            <div class="vv-step">
+              <div class="vv-step-num">2</div>
+              <div class="vv-step-text"><strong>Sévrier → Saint-Jorioz</strong> → Voie verte rive ouest sur ancienne voie ferrée (30 km aménagés)</div>
+            </div>
+            <div class="vv-step">
+              <div class="vv-step-num">3</div>
+              <div class="vv-step-text"><strong>Bout-du-Lac</strong> → Pause au Bon Wagon (ancienne gare transformée en café-restaurant)</div>
+            </div>
+            <div class="vv-step">
+              <div class="vv-step-num">4</div>
+              <div class="vv-step-text"><strong>Rive est</strong> → Talloires, Menthon, Veyrier. Retour par la route ou variante col de la Forclaz (+9 km)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vv-cards reveal">
+          <div class="vv-card">
+            <span class="vv-card-icon">⏱️</span>
+            <div>
+              <div class="vv-card-title">1h à 2h30</div>
+              <div class="vv-card-sub">Pour le tour complet à allure tranquille</div>
+            </div>
+          </div>
+          <div class="vv-card">
+            <span class="vv-card-icon">👨‍👩‍👧</span>
+            <div>
+              <div class="vv-card-title">Accessible à tous</div>
+              <div class="vv-card-sub">30 km sécurisés, idéal en famille</div>
+            </div>
+          </div>
+          <div class="vv-card">
+            <span class="vv-card-icon">🚲</span>
+            <div>
+              <div class="vv-card-title">Location à 500 m</div>
+              <div class="vv-card-sub">Vélos classiques & électriques</div>
+            </div>
+          </div>
+          <div class="vv-card">
+            <span class="vv-card-icon">⚡</span>
+            <div>
+              <div class="vv-card-title">Variante sportive</div>
+              <div class="vv-card-sub">Col de la Forclaz : 49 km · 650 m D+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vv-img reveal">
+        <img src="photos/lac_drone2.jpg" alt="Vue aérienne du lac d'Annecy et de la voie verte" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ══ 10 Lieux ══ -->
+<section id="lieux">
+  <div class="container">
+    <div class="lieux-header reveal">
+      <p class="section-tag" style="justify-content: center;">Incontournables</p>
+      <h2 class="section-title" style="text-align: center;">10 lieux <strong>exceptionnels</strong></h2>
+      <p class="lead">Depuis votre studio à Saint-Jorioz, tous ces sites sont accessibles en moins d'une heure.</p>
+    </div>
+
+    <div class="lieux-grid">
+
+      <!-- 1 Featured -->
+      <div class="lieu-card featured reveal">
+        <div class="lieu-card-img">
+          <img src="photos/annecy_lac.jpg" alt="Vieille ville d'Annecy au bord du lac" loading="lazy" />
+          <div class="lieu-number">1</div>
+          <div class="lieu-distance">🚌 15 min en bus</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">🏰</span>
+          <div class="lieu-title">La Vieille Ville d'Annecy & Palais de l'Île</div>
+          <p class="lieu-text">Surnommée la Venise des Alpes, la vieille ville d'Annecy enchante avec ses ruelles médiévales, ses façades colorées et ses canaux transparents. Le Palais de l'Île, bâti au XIIe siècle sur un îlot du Thiou, est le monument le plus photographié de Haute-Savoie. Flânez le long des quais, perdez-vous dans les arcades de la rue Sainte-Claire, et attardez-vous place Notre-Dame pour une pause chocolat chaud savoyard.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🏛️ Culture</span><span class="lieu-tag">📸 Photo</span><span class="lieu-tag">🛍️ Shopping</span><span class="lieu-tag">🍫 Gastronomie</span></div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/menthon.jpg" alt="Château de Menthon-Saint-Bernard" loading="lazy" />
+          <div class="lieu-number">2</div>
+          <div class="lieu-distance">🚗 20 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">👑</span>
+          <div class="lieu-title">Château de Menthon-Saint-Bernard</div>
+          <p class="lieu-text">Ce château féerique, perché sur un éperon rocheux dominant le lac, aurait inspiré Walt Disney pour la Belle au Bois Dormant. Habité par la même famille depuis plus de 1 000 ans, il conserve ses trésors médiévaux : meubles, tapisseries, bibliothèques. Vue imprenable sur le lac d'Annecy.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🏰 Château</span><span class="lieu-tag">📖 Histoire</span><span class="lieu-tag">👀 Vue lac</span></div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/talloires.jpg" alt="Baie de Talloires, lac d'Annecy" loading="lazy" />
+          <div class="lieu-number">3</div>
+          <div class="lieu-distance">🚗 25 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">⛵</span>
+          <div class="lieu-title">Talloires & sa baie</div>
+          <p class="lieu-text">Classé parmi les plus beaux villages de France, Talloires s'étire au bord de la plus belle baie du lac. Ses eaux claires, son abbaye bénédictine du XIe siècle et ses restaurants gastronomiques en font une halte incontournable. La plage de galets offre une vue à couper le souffle sur les Dents de Lanfon.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🏖️ Plage</span><span class="lieu-tag">🍽️ Gastronomie</span><span class="lieu-tag">⛪ Abbaye</span></div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/forclaz_parapente.jpg" alt="Parapente au col de la Forclaz" loading="lazy" />
+          <div class="lieu-number">4</div>
+          <div class="lieu-distance">🚗 35 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">🪂</span>
+          <div class="lieu-title">Col de la Forclaz & Parapente</div>
+          <p class="lieu-text">À 1 150 m d'altitude, le col de la Forclaz est le site de parapente le plus réputé de la région. Des dizaines de voiles colorées décollent chaque jour au-dessus du lac d'Annecy. Possibilité de vol en tandem pour les débutants. La vue sur le lac depuis le belvédère est extraordinaire.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🪂 Parapente</span><span class="lieu-tag">📸 Panorama</span><span class="lieu-tag">🌄 Belvédère</span></div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/tournette.jpg" alt="La Tournette vue sur le lac d'Annecy" loading="lazy" />
+          <div class="lieu-number">5</div>
+          <div class="lieu-distance">🚗 40 min + rando 5h</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">🏔️</span>
+          <div class="lieu-title">La Tournette (2 351 m)</div>
+          <p class="lieu-text">Point culminant du massif des Bauges dominant le lac d'Annecy, la Tournette offre l'un des panoramas les plus grandioses des Alpes : le lac en contrebas, le Mont-Blanc, les Aravis et même le Jura par temps clair. Randonnée de niveau intermédiaire depuis le col de la Forclaz (5h A/R).</p>
+          <div class="lieu-tags"><span class="lieu-tag">🥾 Randonnée</span><span class="lieu-tag">🏔️ Sommet</span><span class="lieu-tag">🌍 Panorama 360°</span></div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/roc_chere.jpg" alt="Belvédère du Roc de Chère" loading="lazy" />
+          <div class="lieu-number">6</div>
+          <div class="lieu-distance">🚗 20 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">🌿</span>
+          <div class="lieu-title">Roc de Chère · Réserve Naturelle</div>
+          <p class="lieu-text">Cette falaise calcaire classée réserve naturelle en 1977 surplombe le lac entre Talloires et Menthon. Une végétation hybride, à la fois montagnarde et méditerranéenne, abrite une biodiversité remarquable. Le sentier botanique (1h30) révèle des points de vue inoubliables à pic sur les eaux turquoise.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🌱 Nature</span><span class="lieu-tag">🦋 Biodiversité</span><span class="lieu-tag">🥾 Balade facile</span></div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/gorges_fier.jpg" alt="Gorges du Fier" loading="lazy" />
+          <div class="lieu-number">7</div>
+          <div class="lieu-distance">🚗 15 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">🌊</span>
+          <div class="lieu-title">Gorges du Fier</div>
+          <p class="lieu-text">À Lovagny, au nord d'Annecy, la rivière Fier a creusé des gorges vertigineuses de 200 m de profondeur. Un impressionnant chemin suspendu sur passerelles longe les tourbillons sculptés dans la roche. Spectaculaire en toutes saisons (ouvert d'avril à octobre). Accessible en 45 min depuis Saint-Jorioz.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🪨 Géologie</span><span class="lieu-tag">🚶 Passerelles</span><span class="lieu-tag">💧 Gorges</span></div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/duingt.jpg" alt="Château de Duingt sur le lac d'Annecy" loading="lazy" />
+          <div class="lieu-number">8</div>
+          <div class="lieu-distance">🚗 10 min · 🚲 25 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">🏯</span>
+          <div class="lieu-title">Duingt & le Châlet de l'Île</div>
+          <p class="lieu-text">Au resserrement du lac (le "verrou"), Duingt offre l'un des panoramas les plus photographiés de la région : le château médiéval sur son îlot, cerné des eaux turquoise avec les montagnes en toile de fond. Le village possède l'une des plus belles plages ombragées du lac. Au bout du lac, le Bon Wagon (ancienne gare) vaut la pause.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🏰 Château île</span><span class="lieu-tag">🏖️ Plage</span><span class="lieu-tag">📸 Instagrammable</span></div>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/clusaz.jpg" alt="La Clusaz, station des Aravis" loading="lazy" />
+          <div class="lieu-number">9</div>
+          <div class="lieu-distance">🚗 40 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">⛷️</span>
+          <div class="lieu-title">La Clusaz & Le Grand-Bornand</div>
+          <p class="lieu-text">À 40 minutes de Saint-Jorioz, ces deux stations savoyardes sont des destinations 4 saisons. En été : VTT, randonnées, luge d'été, accrobranche, fromages d'alpages. En hiver : ski alpin (230 km de pistes), ski de fond, raquettes. L'architecture typique de ces villages savoyards vaut à elle seule le détour.</p>
+          <div class="lieu-tags"><span class="lieu-tag">⛷️ Ski</span><span class="lieu-tag">🚵 VTT</span><span class="lieu-tag">🧀 Reblochon</span></div>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="lieu-card reveal">
+        <div class="lieu-card-img">
+          <img src="photos/aravis.jpg" alt="Massif des Aravis, Haute-Savoie" loading="lazy" />
+          <div class="lieu-number">10</div>
+          <div class="lieu-distance">🚗 20-45 min</div>
+        </div>
+        <div class="lieu-body">
+          <span class="lieu-emoji">⛰️</span>
+          <div class="lieu-title">Les Aravis & Massif des Bornes</div>
+          <p class="lieu-text">Visible depuis votre studio — ce sont ces mêmes Dents de Lanfon qui vous regardent chaque matin ! Le massif des Aravis offre une constellation de sentiers de randonnée, de cols mythiques (Aravis, Colombière) et d'alpages où paissent les vaches à Abondance. Un terrain de jeu infini pour les amoureux de la montagne.</p>
+          <div class="lieu-tags"><span class="lieu-tag">🥾 Randonnée</span><span class="lieu-tag">🐄 Alpages</span><span class="lieu-tag">🌄 Cols</span></div>
+        </div>
+      </div>
+
+    </div><!-- /lieux-grid -->
+  </div>
+</section>
+
+
+<!-- ══ Activités Outdoor ══ -->
+<section id="activites" style="background: var(--white); padding: 88px 24px;">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 52px;">
+      <p class="section-tag" style="justify-content:center;">Sports & nature</p>
+      <h2 class="section-title" style="text-align:center;">Activités <strong>outdoor</strong></h2>
+      <p class="lead" style="text-align:center; margin:0 auto;">La région d'Annecy est un terrain de jeu exceptionnel pour les amateurs de sensations et de plein air.</p>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:20px;">
+
+      <div class="monument-card reveal">
+        <div class="monument-img">
+          <img src="photos/aravis.jpg" alt="Escalade falaises lac Annecy" loading="lazy"/>
+        </div>
+        <div class="monument-body">
+          <span class="monument-icon">🧗</span>
+          <div class="monument-title">Escalade</div>
+          <p class="monument-text">La région offre des falaises d'exception : la Cascade de la Frasse, les falaises de Dingy-Saint-Clair, la paroi de Sales près de Thorens-Glières. Des voies pour tous niveaux, avec des panoramas époustouflants sur le lac et les Aravis. Nombreuses écoles d'escalade à Annecy.</p>
+        </div>
+      </div>
+
+      <div class="monument-card reveal">
+        <div class="monument-img">
+          <img src="photos/gorges_fier.jpg" alt="Canyoning gorges Haute-Savoie" loading="lazy"/>
+        </div>
+        <div class="monument-body">
+          <span class="monument-icon">💦</span>
+          <div class="monument-title">Canyoning</div>
+          <p class="monument-text">Les gorges et torrents de Haute-Savoie sont un paradis du canyoning. Les sites incontournables : le Canyon de la Frasse, le Canyoning du Chéran (15 min), les Gorges du Bronze. Prestataires locaux proposant sorties guidées de 2 à 5h pour tous niveaux dès le printemps.</p>
+        </div>
+      </div>
+
+      <div class="monument-card reveal">
+        <div class="monument-img">
+          <img src="photos/lac_drone2.jpg" alt="Golf lac Annecy" loading="lazy"/>
+        </div>
+        <div class="monument-body">
+          <span class="monument-icon">⛳</span>
+          <div class="monument-title">Golf</div>
+          <p class="monument-text">Le Golf d'Annecy (18 trous) à Talloires est l'un des plus beaux parcours de France, avec une vue imprenable sur le lac et les montagnes. À 20 min, le Golf de Giez-Faverges (9 trous) offre un cadre alpin plus intime. Également à 30 min : le Golf de Megève entre sapins et sommets enneigés.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ Massif des Bauges ══ -->
+<section id="bauges" style="background: var(--light); padding: 88px 24px;">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+      <div class="reveal">
+        <p class="section-tag">Parc Naturel Régional</p>
+        <h2 class="section-title">Le Massif des Bauges,<br/><strong>nature sauvage à 20 min</strong></h2>
+        <p class="lead">Entre lac d'Annecy et lac du Bourget, le Massif des Bauges est un Parc Naturel Régional de 85 000 hectares, parmi les moins fréquentés des Alpes. Un paradis pour les randonneurs, les chasseurs de faune sauvage et les amateurs de fromages d'alpage.</p>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:28px;">
+          <div class="activity-item reveal"><span class="activity-icon">🦌</span><div><div class="activity-title">Faune exceptionnelle</div><div class="activity-desc">Chamois, bouquetins, chevreuils et vautours à observer depuis les sentiers. Réserve nationale de chasse et de faune sauvage.</div></div></div>
+          <div class="activity-item reveal"><span class="activity-icon">🧀</span><div><div class="activity-title">Fromages AOP des Bauges</div><div class="activity-desc">Tome des Bauges, Chevrotin, Reblochon : les alpages produisent des fromages reconnus en AOP. Visites de fermes et dégustations en été.</div></div></div>
+          <div class="activity-item reveal"><span class="activity-icon">🥾</span><div><div class="activity-title">Randonnées sauvages</div><div class="activity-desc">Des circuits de 2h à plusieurs jours, refuges en altitude, lacs de montagne. Le Mont Colombier (1956 m) offre un panorama sur tout le massif.</div></div></div>
+        </div>
+      </div>
+      <div style="border-radius:14px; overflow:hidden; aspect-ratio:4/3; box-shadow:0 12px 48px rgba(26,38,48,.16);" class="reveal">
+        <img src="photos/aravis.jpg" alt="Massif des Bauges Haute-Savoie" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Événements ══ -->
+<section id="evenements" style="background: var(--teal-d); padding: 88px 24px;">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:52px;">
+      <p class="section-tag" style="color:var(--teal-l); justify-content:center;">Agenda</p>
+      <p class="section-tag" style="color:var(--teal-l);">── </p>
+      <h2 class="section-title" style="text-align:center; color:white;">Événements <strong style="color:var(--gold);">incontournables</strong></h2>
+      <p class="lead" style="text-align:center; margin:0 auto; color:rgba(255,255,255,.75);">La région d'Annecy rayonne aussi par ses grands rendez-vous sportifs et culturels, réputés dans le monde entier.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
+
+      <div class="amenity-card reveal" style="text-align:left; padding:26px 24px;">
+        <span style="font-size:2rem; display:block; margin-bottom:12px;">🎬</span>
+        <div style="font-size:1.05rem; font-weight:600; color:white; margin-bottom:8px; font-family:'Cormorant Garamond',Georgia,serif;">Festival du Film d'Animation d'Annecy</div>
+        <div style="font-size:.83rem; color:rgba(255,255,255,.7); line-height:1.6;">Chaque année en juin, Annecy accueille le festival d'animation le plus prestigieux au monde — l'équivalent Oscars du film animé. Films en avant-première, masterclasses, expositions et projections en plein air sur le Pâquier. Une semaine de magie.</div>
+        <div style="margin-top:12px; font-size:.75rem; color:var(--gold); font-weight:500;">📅 Juin · Annecy centre</div>
+      </div>
+
+      <div class="amenity-card reveal" style="text-align:left; padding:26px 24px;">
+        <span style="font-size:2rem; display:block; margin-bottom:12px;">🏃</span>
+        <div style="font-size:1.05rem; font-weight:600; color:white; margin-bottom:8px; font-family:'Cormorant Garamond',Georgia,serif;">Marathon du Mont-Blanc</div>
+        <div style="font-size:.83rem; color:rgba(255,255,255,.7); line-height:1.6;">Basé à Chamonix à 1h, ce marathon mythique traverse glaciers et alpages entre 1000 et 2500 m d'altitude. Plusieurs formats : 23 km, 42 km, 80 km et le légendaire 90 km des Courmayeur-Champex-Chamonix. L'une des plus belles courses de montagne au monde.</div>
+        <div style="margin-top:12px; font-size:.75rem; color:var(--gold); font-weight:500;">📅 Juin · Chamonix (1h)</div>
+      </div>
+
+      <div class="amenity-card reveal" style="text-align:left; padding:26px 24px;">
+        <span style="font-size:2rem; display:block; margin-bottom:12px;">🏊🚴🏃</span>
+        <div style="font-size:1.05rem; font-weight:600; color:white; margin-bottom:8px; font-family:'Cormorant Garamond',Georgia,serif;">Ironman Annecy</div>
+        <div style="font-size:.83rem; color:rgba(255,255,255,.7); line-height:1.6;">Le triathlon longue distance d'Annecy se déroule en partie sur le lac (natation), autour du lac et dans les cols environnants (vélo), puis le long des berges (course à pied). Ambiance électrique dans toute la ville. Inscription ultra-compétitive, mais spectacle gratuit et grandiose.</div>
+        <div style="margin-top:12px; font-size:.75rem; color:var(--gold); font-weight:500;">📅 Juillet · Lac d'Annecy</div>
+      </div>
+
+      <div class="amenity-card reveal" style="text-align:left; padding:26px 24px;">
+        <span style="font-size:2rem; display:block; margin-bottom:12px;">🎆</span>
+        <div style="font-size:1.05rem; font-weight:600; color:white; margin-bottom:8px; font-family:'Cormorant Garamond',Georgia,serif;">La Fête du Lac</div>
+        <div style="font-size:.83rem; color:rgba(255,255,255,.7); line-height:1.6;">Chaque premier samedi d'août, Annecy tire le plus grand feu d'artifice sur l'eau d'Europe. Les explosions se reflètent sur les eaux du lac encadrées par les montagnes — un spectacle pyrotechnique et musical absolument unique. Réservez votre studio longtemps à l'avance pour ce week-end.</div>
+        <div style="margin-top:12px; font-size:.75rem; color:var(--gold); font-weight:500;">📅 1er samedi d'août · Lac d'Annecy</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA Final ══ -->
+<section id="cta">
+  <div class="container">
+    <h2 class="cta-title">Prêt à découvrir<br /><strong>cette région exceptionnelle ?</strong></h2>
+    <p class="cta-sub">Réservez votre studio à Saint-Jorioz — votre point de départ idéal pour explorer le lac d'Annecy, la voie verte et tous ces sites remarquables.</p>
+    <div class="cta-buttons">
+      <a href="index.html" class="btn btn-white">← Voir le studio</a>
+      <a href="index.html#contact" class="btn btn-white">Réserver</a>
+      <a href="https://www.airbnb.fr/rooms/1438319463357113219" target="_blank" rel="noopener" class="btn btn-outline-white">Voir sur Airbnb</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Footer ══ -->
+<footer>
+  <div class="footer-brand">Herbier <span>·</span> Entre Lac &amp; Cimes</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Le studio</a></li>
+    <li><a href="#saint-jorioz">Saint-Jorioz</a></li>
+    <li><a href="#annecy">Annecy</a></li>
+    <li><a href="#lac">Le Lac</a></li>
+    <li><a href="#voie-verte">Voie Verte</a></li>
+    <li><a href="#lieux">10 lieux</a></li>
+    <li><a href="#activites">Activités</a></li>
+    <li><a href="#evenements">Événements</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 · Studio Lac d'Annecy · Guide touristique</p>
+</footer>
+
+<!-- ══ Scripts ══ -->
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
